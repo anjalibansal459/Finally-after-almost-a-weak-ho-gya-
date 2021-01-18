@@ -1,0 +1,64 @@
+
+var canvas,bg;
+var together;
+var tom, tomImg1,tomImg23,tomImg4;
+var jerry, jerryImg1,jerryImg23,jerryImg4;
+
+function preload() {
+    bg = loadImage("garden.png");
+    tomImg1= loadAnimation("tomOne.png");
+    tomImg23=loadAnimation("tomTwo.png","tomThree.png");
+    tomImg4= loadAnimation("tomFour.png");
+    jerryImg1=loadAnimation("jerryOne.png");
+    jerryImg23= loadAnimation("jerryTwo.png","jerryThree.png");
+    jerryImg4=loadAnimation("jerryFour.png");
+
+}
+
+function setup(){
+    canvas = createCanvas(1000,800);
+
+    tom = createSprite(870, 600);
+    tom.addAnimation("tomSleeping", tomImg1);
+    tom.scale = 0.2;
+tom.debug=true;
+    jerry = createSprite(200, 600);
+    jerry.addAnimation("jerryStanding", jerryImg1);
+    jerry.scale = 0.15;
+    jerry.debug=true;
+
+}
+
+function draw() {
+
+    background(bg);
+
+    if(tom.x - jerry.x < (tom.width - jerry.width)/2)
+    { 
+        tom.velocityX=0;
+        tom.addAnimation("tomLastImage", tomImg4);
+        tom.x =300;
+        tom.scale=0.2;
+        tom.changeAnimation("tomLastImage");
+        jerry.addAnimation("jerryLastImage", jerryImg4);
+        jerry.scale=0.15;
+        jerry.changeAnimation("jerryLastImage");
+    }  
+
+    drawSprites();
+}
+
+
+function keyPressed(){
+
+    if(keyCode === LEFT_ARROW){
+        tom.velocityX = -5; 
+        tom.addAnimation("tomRunning", tomImg23);
+        tom.changeAnimation("tomRunning");
+        
+        jerry.addAnimation("jerryTeasing", jerryImg23);
+       // jerry.frameDelay = 25;
+        jerry.changeAnimation("jerryTeasing");
+    }
+}
+
